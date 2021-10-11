@@ -5,7 +5,7 @@ export default function PaintField() {
     const Paint = (e) => {
         
         const grafics = e.target.getContext('2d');
-        
+        const grafics1 = e.target.getContext('2d');
         
 
         /*grafics.beginPath();
