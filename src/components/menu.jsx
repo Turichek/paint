@@ -1,16 +1,18 @@
 import { Box, Button } from "@mui/material";
-import BrushIcon from '@mui/icons-material/Brush';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import React from "react";
 
-export default function Menu({ color, range, mode }) {
+export default function Menu({ color, range, setRange, mode, setVis }) {
 
     function changeMode(e){
+        // setVis('hidden')
         if(e.nodeName === 'IMG'){
             mode.func(e.parentNode.value);
+            setVis('hidden');
         }
         else{
             mode.func(e.value);
+            setVis('hidden');
         }
     }
     return (
@@ -41,11 +43,13 @@ export default function Menu({ color, range, mode }) {
                     <Button sx={{ mt: 1 }} variant="outlined" value={'pipette'} onClick={(e) => changeMode(e.target)}>
                         <img src="https://img.icons8.com/material-rounded/24/000000/color-dropper.png" alt='...'/>
                     </Button>
-                    <Button sx={{ mt: 1 }} variant="contained" ><BrushIcon /></Button>
+                    <Button sx={{ mt: 1 }} variant="outlined" value={'excretion'} onClick={(e) => changeMode(e.target)} >
+                        <img style={{width:'24px'}} src="https://img.icons8.com/ios-glyphs/30/000000/ios-application-placeholder.png" alt='...'/>
+                    </Button>
                     <Button sx={{ mt: 1 }} variant="contained" ><BorderColorIcon /></Button>
                 </Box>
                 <input style={{ width: '100%' }} type="color" value={color.value} onChange={(e) => color.func(e.target.value)} />
-                <input type="range" min="1" max="100" step="1" value={range.value} onChange={(e) => range.func(e.target.value)} />
+                <input type="range" min="1" max="100" step="1" value={range} onChange={(e) => setRange(e.target.value)} />
             </Box>
         </Box>
     )

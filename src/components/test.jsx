@@ -8,6 +8,7 @@ export default function Test() {
     const [color, setColor] = useState('#000000');
     const [range, setRange] = useState(25);
     const [mode, setMode] = useState('brush');
+    const [vis, setVis] = useState('hidden');
 
     const values = {
         color: {
@@ -27,11 +28,16 @@ export default function Test() {
     return (
         <Box sx={{ display: 'flex' }}>
             <Menu color = {values.color}
-                range = {values.range}
-                mode = {values.mode} />
+                range = {range}
+                setRange={setRange}
+                mode = {values.mode} 
+                setVis={setVis}
+                />
             <PaintField color = {values.color}
                 range = {range}
-                mode = {values.mode} />
+                mode = {values.mode} 
+                vis={vis}
+                setVis={setVis}/>
         </Box>
     )
 }
