@@ -1,16 +1,13 @@
 import { Box, Button } from "@mui/material";
-import BorderColorIcon from '@mui/icons-material/BorderColor';
 import React from "react";
 
 export default function Menu({ color, range, setRange, mode, setVis }) {
-
-    function changeMode(e){
-        // setVis('hidden')
-        if(e.nodeName === 'IMG'){
+    function changeMode(e) {
+        if (e.nodeName === 'IMG') {
             mode.func(e.parentNode.value);
             setVis('hidden');
         }
-        else{
+        else {
             mode.func(e.value);
             setVis('hidden');
         }
@@ -32,21 +29,23 @@ export default function Menu({ color, range, setRange, mode, setVis }) {
                     justifyContent: 'space-between'
                 }}>
                     <Button sx={{ mt: 1 }} variant="outlined" value={'brush'} onClick={(e) => changeMode(e.target)}>
-                        <img src="https://img.icons8.com/material/24/000000/paint-brush.png" alt='...'/>
+                        <img src="https://img.icons8.com/material/24/000000/paint-brush.png" alt='...' />
                     </Button>
                     <Button sx={{ mt: 1 }} variant="outlined" value={'marker'} onClick={(e) => changeMode(e.target)}>
-                        <img src="https://img.icons8.com/material-sharp/24/000000/chisel-tip-marker.png" alt='...'/>
+                        <img src="https://img.icons8.com/material-sharp/24/000000/chisel-tip-marker.png" alt='...' />
                     </Button>
                     <Button sx={{ mt: 1 }} variant="outlined" value={'cleaner'} onClick={(e) => changeMode(e.target)}>
-                        <img src="https://img.icons8.com/material-sharp/24/000000/eraser.png" alt='...'/>
+                        <img src="https://img.icons8.com/material-sharp/24/000000/eraser.png" alt='...' />
                     </Button>
                     <Button sx={{ mt: 1 }} variant="outlined" value={'pipette'} onClick={(e) => changeMode(e.target)}>
-                        <img src="https://img.icons8.com/material-rounded/24/000000/color-dropper.png" alt='...'/>
+                        <img src="https://img.icons8.com/material-rounded/24/000000/color-dropper.png" alt='...' />
                     </Button>
                     <Button sx={{ mt: 1 }} variant="outlined" value={'excretion'} onClick={(e) => changeMode(e.target)} >
-                        <img style={{width:'24px'}} src="https://img.icons8.com/ios-glyphs/30/000000/ios-application-placeholder.png" alt='...'/>
+                        <img style={{ width: '24px' }} src="https://img.icons8.com/ios-glyphs/30/000000/ios-application-placeholder.png" alt='...' />
                     </Button>
-                    <Button sx={{ mt: 1 }} variant="contained" ><BorderColorIcon /></Button>
+                    <Button sx={{ mt: 1 }} variant="outlined" value={'crop'} onClick={(e) => changeMode(e.target)} >
+                        <img style={{ width: '24px' }} src="https://img.icons8.com/ios-glyphs/30/000000/crop.png" alt="..."/>
+                    </Button>
                 </Box>
                 <input style={{ width: '100%' }} type="color" value={color.value} onChange={(e) => color.func(e.target.value)} />
                 <input type="range" min="1" max="100" step="1" value={range} onChange={(e) => setRange(e.target.value)} />

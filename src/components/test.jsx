@@ -22,6 +22,10 @@ export default function Test() {
         mode: {
             value: mode,
             func: setMode
+        },
+        visible: {
+            value: vis,
+            func: setVis
         }
     }
     
@@ -36,8 +40,7 @@ export default function Test() {
             <PaintField color = {values.color}
                 range = {range}
                 mode = {values.mode} 
-                vis={vis}
-                setVis={setVis}/>
+                visible={values.visible}/>
         </Box>
     )
 }
