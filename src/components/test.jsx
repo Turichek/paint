@@ -9,6 +9,7 @@ export default function Test() {
     const [range, setRange] = useState(25);
     const [mode, setMode] = useState('brush');
     const [vis, setVis] = useState('hidden');
+    const [clear, setClear] = useState(false);
 
     const values = {
         color: {
@@ -26,21 +27,26 @@ export default function Test() {
         visible: {
             value: vis,
             func: setVis
+        },
+        clear: {
+            value: clear,
+            func: setClear
         }
     }
     
     return (
         <Box sx={{ display: 'flex' }}>
             <Menu color = {values.color}
-                range = {range}
-                setRange={setRange}
+                range = {values.range}
                 mode = {values.mode} 
                 setVis={setVis}
+                clear={values.clear}
                 />
             <PaintField color = {values.color}
                 range = {range}
                 mode = {values.mode} 
-                visible={values.visible}/>
+                visible={values.visible}
+                clear={values.clear}/>
         </Box>
     )
 }

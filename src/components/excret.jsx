@@ -26,25 +26,25 @@ export default function Excret({ top, left, width, height, visibility, setLeft, 
         if (e.altKey) {
             mode.func('copy');
             const ctx = canva.current.getContext('2d');
-            drawFromImage(left, top, ctx, toImg);
+            drawFromImage(left, top, ctx, toImg, 1);
         }
-        console.log(toImg);
     }
 
     function Up(e) {
-        if (mode.value !== 'excretion') {
+        if (mode.value === 'copy' || mode.value === 'relocate') {
             const ctx = canva.current.getContext('2d');
-            drawFromImage(left, top, ctx, toImg);
+            drawFromImage(left, top, ctx, toImg, 1);
             hideExcret(toImg, visibility.func, mode.func);
         }
-        else{
+        else if (mode.value === 'crop') {
+            const ctx = canva.current.getContext('2d');
+            drawFromImage(left, top, ctx, toImg, 2);
+            hideExcret(toImg, visibility.func, mode.func);
+        }
+        else {
             alert("некорректное выделение!")
             hideExcret(toImg, visibility.func, mode.func);
         }
-        /*ctx.drawImage(toImg.current,left-219,top+1);
-        toImg.current.src = "null";
-        visibility.func('hidden');
-        mode.func('brush');*/
     }
 
     return (

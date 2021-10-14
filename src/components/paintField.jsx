@@ -4,7 +4,7 @@ import Excret from "./excret";
 import drawFromImage from "./helpers/drawFromImage";
 import hideExcret from "./helpers/hideExcret";
 
-export default function PaintField({ color, range, mode, visible }) {
+export default function PaintField({ color, range, mode, visible, clear }) {
     const canva = useRef(null);
     const toImg = useRef(null);
     const [x, setX] = useState(0);
@@ -12,7 +12,6 @@ export default function PaintField({ color, range, mode, visible }) {
     const [w, setW] = useState(0);
     const [h, setH] = useState(0);
     const [grafics, setGrafics] = useState('');
-    const [isFirst, setIsFirst] = useState(false);
 
     let excret = <Excret
         left={x}
@@ -27,11 +26,11 @@ export default function PaintField({ color, range, mode, visible }) {
         canva={canva}
     />
 
-    if (grafics !== '' && isFirst === false) {
+    if (grafics !== '' && clear.value === false) {
         grafics.fillStyle = '#eee';
         grafics.fillRect(0, 0, 1610, 981);
         grafics.fill();
-        setIsFirst(true);
+        clear.func(true);
     }
 
     function paint(e, g, color) {
@@ -108,7 +107,7 @@ export default function PaintField({ color, range, mode, visible }) {
             setH(0);
         }
         else if (mode.value === 'relocate') {
-            drawFromImage(x, y, grafics, toImg);
+            drawFromImage(x, y, grafics, toImg, 1);
             hideExcret(toImg, visible.func, mode.func);
         }
     }
@@ -119,7 +118,7 @@ export default function PaintField({ color, range, mode, visible }) {
         canvas.width = copy.width;
         canvas.height = copy.height;
         ctx.putImageData(copy, 0, 0);
-        toImg.current.src = canvas.toDataURL();
+        toImg.current.src = canvas.toDataURL("image/jpeg");
     }
 
     function Up() {
@@ -131,13 +130,13 @@ export default function PaintField({ color, range, mode, visible }) {
             grafics.fillRect(x - 219, y + 1, w, h);
             grafics.fill();
             createImageFromExcret(copyToImg);
+
+            alert("При зажатой ЛКМ вы можете переместить содержимое выделения\nЕсли зажмете Alt и будете перетаскивать, то скопируюте сожержимое")
         }
         else if (mode.value === 'crop') {
-            const copyToImg = grafics.getImageData(x - 219, y + 1, w, h);
-            createImageFromExcret(copyToImg);
-
-            grafics.drawImage(toImg.current,0,0,w,h,0,0,1610,981);
-            hideExcret(toImg, visible.func, mode.func);
+            const toCrop = grafics.getImageData(x - 219, y + 1, w, h);
+            createImageFromExcret(toCrop);
+            alert("При клике на выделение произойдет масштабирование изображения на весь холст")
         }
     }
 
@@ -202,7 +201,6 @@ export default function PaintField({ color, range, mode, visible }) {
                         :
                         <></>
             }
-
             <canvas
                 unselectable="on"
                 draggable="false"
