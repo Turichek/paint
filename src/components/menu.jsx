@@ -56,7 +56,7 @@ export default function Menu({ color, range, mode, setVis, clear }) {
                     justifyContent: 'space-between',
                     my: 1
                 }}>
-                    <label style={{ width: '100%', textAlign: 'center' }}>Выберете мод</label>
+                    <label style={{ width: '100%', textAlign: 'center' }}>Выбранный мод: {mode.value}</label>
                     {toButton.map((item, index) =>
                         <Button key={index} sx={{ mt: 1 }} variant="outlined" value={item.mode} onClick={(e) => changeMode(e.target)} >
                             <img style={{ width: '24px' }} src={item.src} alt="..." />

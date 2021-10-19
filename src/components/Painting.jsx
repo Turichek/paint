@@ -4,7 +4,7 @@ import { useState } from "react";
 import Menu from "./menu";
 import PaintField from "./paintField";
 
-export default function Test() {
+export default function Painting() {
     const [color, setColor] = useState('#000000');
     const [range, setRange] = useState(25);
     const [mode, setMode] = useState('brush');

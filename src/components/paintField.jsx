@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
 import React, { useRef, useState } from "react";
+import { useEffect } from "react";
 import Excret from "./excret";
 import drawFromImage from "./helpers/drawFromImage";
 import hideExcret from "./helpers/hideExcret";
@@ -12,6 +13,7 @@ export default function PaintField({ color, range, mode, visible, clear }) {
     const [w, setW] = useState(0);
     const [h, setH] = useState(0);
     const [grafics, setGrafics] = useState('');
+    let isClear = false;
 
     let excret = <Excret
         left={x}
@@ -26,39 +28,45 @@ export default function PaintField({ color, range, mode, visible, clear }) {
         canva={canva}
     />
 
-    if (grafics !== '' && clear.value === false) {
+    if (grafics !== '' && clear.value === isClear) {
         grafics.fillStyle = '#eee';
         grafics.fillRect(0, 0, 1610, 981);
         grafics.fill();
-        clear.func(true);
+        isClear = true;
     }
 
-    function paint(e, g, color) {
+    useEffect(()=>{
+        if(isClear === true){
+            clear.func(true);
+        }
+    })
+
+    function paint(e, color) {
         switch (mode.value) {
             case 'cleaner':
-                g.lineWidth = range * 2;
-                g.lineCap = 'round';
-                g.lineJoin = 'round';
-                g.strokeStyle = '#eee';
-                g.lineTo(e.pageX - 220, e.pageY);
-                g.stroke();
+                grafics.lineWidth = range * 2;
+                grafics.lineCap = 'round';
+                grafics.lineJoin = 'round';
+                grafics.strokeStyle = '#eee';
+                grafics.lineTo(e.pageX - 220, e.pageY);
+                grafics.stroke();
                 break;
 
             case 'brush':
-                g.lineWidth = range * 2;
-                g.lineCap = 'round';
-                g.lineJoin = 'round';
-                g.strokeStyle = color;
-                g.lineTo(e.pageX - 220, e.pageY);
-                g.stroke();
+                grafics.lineWidth = range * 2;
+                grafics.lineCap = 'round';
+                grafics.lineJoin = 'round';
+                grafics.strokeStyle = color;
+                grafics.lineTo(e.pageX - 220, e.pageY);
+                grafics.stroke();
                 break;
 
             case 'marker':
-                g.fillStyle = color;
-                g.beginPath();
-                g.fillRect(e.pageX - 220 - (range / 2), e.pageY - (range / 2), range, range);
-                g.fill();
-                g.closePath();
+                grafics.fillStyle = color;
+                grafics.beginPath();
+                grafics.fillRect(e.pageX - 220 - (range / 2), e.pageY - (range / 2), range, range);
+                grafics.fill();
+                grafics.closePath();
                 break;
 
             case 'crop':
@@ -148,7 +156,7 @@ export default function PaintField({ color, range, mode, visible, clear }) {
         try {
             if (mode.value !== 'pipette') {
                 if (e.nativeEvent.which === 1) {
-                    paint(e, grafics, color.value);
+                    paint(e, color.value);
                 }
                 else target.style.visibility = 'visible';
             }
@@ -169,7 +177,7 @@ export default function PaintField({ color, range, mode, visible, clear }) {
         }
     }
 
-    function bPath(e) {
+    function bPath() {
         setGrafics(canva.current.getContext('2d'));
         if (grafics !== '') grafics.beginPath();
     }
@@ -208,7 +216,7 @@ export default function PaintField({ color, range, mode, visible, clear }) {
                 style={{ backgroundColor: '#eee' }}
                 onMouseDown={(e) => Down(e)}
                 onMouseUp={(e) => Up(e)}
-                onMouseEnter={(e) => bPath(e)}
+                onMouseEnter={bPath}
                 onClick={(e) => getColor(e)}
                 onMouseMove={(e) => Move(e)}
                 onDragStart={() => { return false }}

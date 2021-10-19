@@ -1,10 +1,10 @@
 import './App.css';
-import Test from './components/test';
+import Painting from './components/Painting';
 
 function App() {
   return (
     <div style={{height:'100%'}} className="App">
-      <Test/>
+      <Painting/>
     </div>
   );
 }
